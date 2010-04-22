@@ -16,11 +16,15 @@ class Profile < Struct.new(:first_name, :last_name)
 
   # end
 
-  def completion_status
-    Progression::Progress.new(self) do
+  def self.profile_progression
+    @progression ||= Progression::Progression.new do
       steps << Progression::Step.new(:step_1) { !first_name.blank? }
       steps << Progression::Step.new(:step_2) { !last_name.blank? }
     end
+  end
+
+  def profile_progress
+    self.class.profile_progression.progress_for(self)
   end
 
 end
@@ -29,7 +33,7 @@ describe "Progression" do
 
   before do
     @profile = Profile.new
-    @progression = @profile.completion_status
+    @progression = @profile.profile_progress
   end
 
   it 'should return a list of steps' do
@@ -52,7 +56,7 @@ describe "Progression" do
 
     before do
       @profile.first_name = "Michael"
-      @progression = @profile.completion_status
+      @progression = @profile.profile_progress
     end
 
     it 'should have 1 completed step' do
@@ -71,7 +75,7 @@ describe "Progression" do
 
       before do
         @profile.last_name = "Jordan"
-        @progression = @profile.completion_status
+        @progression = @profile.profile_progress
       end
 
       it 'should have 1 completed step' do

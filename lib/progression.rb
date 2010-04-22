@@ -1,13 +1,27 @@
 module Progression
 
+  class Progression
+
+    attr_reader :steps
+
+    def initialize(&block)
+      @steps = []
+      instance_exec &block
+    end
+
+    def progress_for(object)
+      Progress.new(object, steps)
+    end
+
+  end
+
   class Progress
 
     attr_reader :steps
 
-    def initialize(object, &block)
+    def initialize(object, steps)
       @object = object
-      @steps = []
-      instance_exec &block
+      @steps = steps
     end
 
     def completed_steps
@@ -25,12 +39,6 @@ module Progression
         !step.evaluate(@object)
       end
     end
-
-    private
-    def step(name, &block)
-      @steps << Step.new(name, &block)
-    end
-
   end
 
   class Step
