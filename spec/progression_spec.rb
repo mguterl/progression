@@ -2,30 +2,30 @@ require 'spec/spec_helper'
 
 class Profile < Struct.new(:first_name, :last_name)
 
-  # include Progression
+  include Progression
 
-  # progression :completion_status do
+  progression :profile do
 
-  #   step :step_1 do
-  #     !first_name.blank?
+    step :step_1 do
+      !first_name.blank?
+    end
+
+    step :step_2 do
+      !last_name.blank?
+    end
+
+  end
+
+  # def self.profile_progression
+  #   @progression ||= Progression::Progression.new do
+  #     steps << Progression::Step.new(:step_1) { !first_name.blank? }
+  #     steps << Progression::Step.new(:step_2) { !last_name.blank? }
   #   end
-
-  #   step :step_2 do
-  #     !last_name.blank?
-  #   end
-
   # end
 
-  def self.profile_progression
-    @progression ||= Progression::Progression.new do
-      steps << Progression::Step.new(:step_1) { !first_name.blank? }
-      steps << Progression::Step.new(:step_2) { !last_name.blank? }
-    end
-  end
-
-  def profile_progress
-    self.class.profile_progression.progress_for(self)
-  end
+  # def profile_progress
+  #   self.class.profile_progression.progress_for(self)
+  # end
 
 end
 

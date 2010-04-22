@@ -1,5 +1,23 @@
 module Progression
 
+  def self.included(base)
+    base.extend(ClassMethods)
+  end
+
+  module ClassMethods
+
+    def progression(name, &block)
+      (class << self; self; end).send(:define_method, "#{name}_progression") do
+        Progression.new(&block)
+      end
+
+      define_method("#{name}_progress") do
+        self.class.send("#{name}_progression").progress_for(self)
+      end
+    end
+
+  end
+
   class Progression
 
     attr_reader :steps
@@ -11,6 +29,12 @@ module Progression
 
     def progress_for(object)
       Progress.new(object, steps)
+    end
+
+    private
+
+    def step(name, &block)
+      @steps << Step.new(name, &block)
     end
 
   end
