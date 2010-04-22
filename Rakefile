@@ -5,8 +5,16 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "progression"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{progression provides a set of simple utility classes and a DSL for measuring an objects progress through a progression of steps}
+    gem.description = %Q{progression provides a set of simple utility classes and a DSL for
+measuring an objects progress through a progression of steps.  This is
+especially useful for defining and calculating profile completion
+status in a social application.
+
+There are a few existing solutions similar to progression, but they
+try to do too much.  The other options that I am familiar with are
+either coupled with ActiveRecord or ActionController in some way.
+}
     gem.email = "mguterl@gmail.com"
     gem.homepage = "http://github.com/mguterl/progression"
     gem.authors = ["Michael Guterl"]
