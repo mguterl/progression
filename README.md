@@ -1,7 +1,13 @@
 # progression
 
 progression provides a set of simple utility classes and a DSL for
-measuring an objects progress through a progression of steps.
+measuring an objects progress through a progression of steps.  This is
+especially useful for defining and calculating profile completion
+status in a social application.
+
+There are a few existing solutions similar to progression, but they
+try to do too much.  The other options that I am familiar with are
+either coupled with ActiveRecord or ActionController in some way.
 
 ## DSL syntax
 
