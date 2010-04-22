@@ -24,17 +24,24 @@ module Progression
 
     def initialize(&block)
       @steps = []
+      @percentage_values = {}
       instance_exec &block if block_given?
     end
 
     def progress_for(object)
-      Progress.new(object, steps)
+      Progress.new(object, self)
+    end
+
+    def percentage_value_for(step)
+      @percentage_values[step] || (1 / steps.size.to_f) * 100
     end
 
     private
 
-    def step(name, &block)
-      @steps << Step.new(name, &block)
+    def step(name, options = {}, &block)
+      step = Step.new(name, &block)
+      @steps << step
+      @percentage_values[step] = options[:percentage] if options[:percentage]
     end
 
   end
@@ -43,9 +50,10 @@ module Progression
 
     attr_reader :steps
 
-    def initialize(object, steps)
+    def initialize(object, progression)
       @object = object
-      @steps = steps
+      @progression = progression
+      @steps = progression.steps
     end
 
     def completed_steps
@@ -55,7 +63,9 @@ module Progression
     end
 
     def percentage_completed
-      (completed_steps.size / steps.size.to_f) * 100
+      completed_steps.inject(0) do |percentage_completed, step|
+        percentage_completed + @progression.percentage_value_for(step)
+      end
     end
 
     def next_step

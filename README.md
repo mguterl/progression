@@ -28,16 +28,47 @@ either coupled with ActiveRecord or ActionController in some way.
 
     user = User.new
     user.registration_progress.completed_steps # => []
-    user.registration_progress.percentage_complete # => 0.0
-    user.next_step.name # => :step_1
+    user.registration_progress.percentage_completed # => 0.0
+    user.registration_progress.next_step.name # => :step_1
 
     user.first_name = "Michael"
     user.last_name  = "Jordan"
     user.registration_progress.completed_steps # => [:step_1]
-    user.registration_progress.percentage_complete # => 50.0
-    user.next_step.name # => :step_2
+    user.registration_progress.percentage_completed # => 50.0
+    user.registration_progress.next_step.name # => :step_2
 
     ...
+
+## Custom Percentages
+
+progression provides support for defining your own percentages for
+each step rather than having them predefined as (1 / number_of_steps).
+
+    class User < Struct.new(:first_name, :last_name, :email, :phone)
+
+      include Progression
+
+      progression :registration do
+        step :important_step, :percentage => 50.0 do
+          first_name.present? && last_name.present?
+        end
+
+        step :step_2, :percentage => 25.0 do
+          email.present?
+        end
+
+        step :step_3, :percentage => 25.0 do
+          phone.present?
+        end
+      end
+    end
+
+    user = User.new
+    user.first_name = "Michael"
+    user.last_name  = "Jordan"
+    user.registration_progress.completed_steps # => [:important_step]
+    user.registration_progress.percentage_completed # => 50.0
+    user.registration_progress.next_step.name # => :step_2
 
 
 ## Utility classes

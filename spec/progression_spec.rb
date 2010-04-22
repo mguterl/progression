@@ -1,6 +1,6 @@
 require 'spec/spec_helper'
 
-class Profile < Struct.new(:first_name, :last_name)
+class Profile < Struct.new(:first_name, :last_name, :email)
 
   include Progression
 
@@ -14,6 +14,21 @@ class Profile < Struct.new(:first_name, :last_name)
       !last_name.blank?
     end
 
+  end
+
+  progression :registration do
+
+    step :step_1, :percentage => 25.0 do
+      !first_name.blank?
+    end
+
+    step :step_2, :percentage => 25.0 do
+      !last_name.blank?
+    end
+
+    step :step_3, :percentage => 50.0 do
+      !email.blank?
+    end
   end
 
   # def self.profile_progression
@@ -88,6 +103,51 @@ describe "Progression" do
 
       it 'should return nil when there are no more steps to be completed' do
         @progression.next_step.should == nil
+      end
+
+    end
+
+  end
+
+  describe "explicit percentages" do
+
+    before do
+      @profile = Profile.new
+      @progression = @profile.registration_progress
+    end
+
+    it 'should return a list of steps' do
+      @progression.should have(3).steps
+    end
+
+    it 'should return a list of completed steps' do
+      @progression.should have(0).completed_steps
+    end
+
+    it 'should return the percentage completed' do
+      @progression.percentage_completed.should == 0.0
+    end
+
+    it 'should return the next step to be completed' do
+      @progression.next_step.name.should == :step_1
+    end
+
+    describe "after last step" do
+
+      before do
+        @profile.email = "foo@bar.com"
+      end
+
+      it 'should return a list of completed steps' do
+        @progression.should have(1).completed_steps
+      end
+
+      it 'should return the percentage completed' do
+        @progression.percentage_completed.should == 50.0
+      end
+
+      it 'should return the next step to be completed' do
+        @progression.next_step.name.should == :step_1
       end
 
     end
