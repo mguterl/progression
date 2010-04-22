@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{progression}
-  s.version = "0.0.1"
+  s.version = "0.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Guterl"]
@@ -32,6 +32,8 @@ either coupled with ActiveRecord or ActionController in some way.
      "Rakefile",
      "VERSION",
      "lib/progression.rb",
+     "progression.gemspec",
+     "rails/init.rb",
      "spec/progression_spec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb"
