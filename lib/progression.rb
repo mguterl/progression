@@ -24,7 +24,7 @@ module Progression
 
     def initialize(&block)
       @steps = []
-      instance_exec &block
+      instance_exec &block if block_given?
     end
 
     def progress_for(object)
