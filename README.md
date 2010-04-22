@@ -68,6 +68,16 @@ either coupled with ActiveRecord or ActionController in some way.
     progress.percentage_completed # => 100.0
     progress.next_step # => nil
 
+## Rails / ActiveRecord
+
+You can use progression as a gem or a plugin in your Rails application.  progression does not make any assumptions about the objects that you are interested in extending.
+
+Simply add an initializer:
+
+config/initializers/progression.rb
+
+    ActiveRecord::Base.send(:include, Progression)
+
 ## Note on Patches/Pull Requests
 
 * Fork the project.
