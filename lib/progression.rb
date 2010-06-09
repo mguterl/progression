@@ -73,6 +73,12 @@ module Progression
         !step.evaluate(@object)
       end
     end
+
+    def next_step_percentage_completed
+      return 100.0 if next_step.nil?
+      percentage_completed + @progression.percentage_value_for(next_step)
+    end
+
   end
 
   class Step

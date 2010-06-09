@@ -67,6 +67,10 @@ describe "Progression" do
     @progression.next_step.name.should == :step_1
   end
 
+  it 'should return the percentage completed after the next step is completed' do
+    @progression.next_step_percentage_completed.should == 50.0
+  end
+
   describe "after first step" do
 
     before do
@@ -86,6 +90,10 @@ describe "Progression" do
       @progression.next_step.name.should == :step_2
     end
 
+    it 'should return the percentage completed after the next step is completed' do
+      @progression.next_step_percentage_completed.should == 100.0
+    end
+
     describe "and second step" do
 
       before do
@@ -103,6 +111,10 @@ describe "Progression" do
 
       it 'should return nil when there are no more steps to be completed' do
         @progression.next_step.should == nil
+      end
+
+      it 'should return the percentage completed after the next step is completed' do
+        @progression.next_step_percentage_completed.should == 100.0
       end
 
     end
@@ -132,6 +144,10 @@ describe "Progression" do
       @progression.next_step.name.should == :step_1
     end
 
+    it 'should return the percentage completed after the next step is completed' do
+      @progression.next_step_percentage_completed.should == 25.0
+    end
+
     describe "after last step" do
 
       before do
@@ -148,6 +164,10 @@ describe "Progression" do
 
       it 'should return the next step to be completed' do
         @progression.next_step.name.should == :step_1
+      end
+
+      it 'should return the percentage completed after the next step is completed' do
+        @progression.next_step_percentage_completed.should == 75.0
       end
 
     end
