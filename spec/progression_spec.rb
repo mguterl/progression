@@ -68,7 +68,7 @@ describe "Progression" do
   end
 
   it 'should return the percentage completed after the next step is completed' do
-    @progression.next_step_percentage_completed.should == 50.0
+    @progression.percentage_completed_after_next_step.should == 50.0
   end
 
   describe "after first step" do
@@ -91,7 +91,7 @@ describe "Progression" do
     end
 
     it 'should return the percentage completed after the next step is completed' do
-      @progression.next_step_percentage_completed.should == 100.0
+      @progression.percentage_completed_after_next_step.should == 100.0
     end
 
     describe "and second step" do
@@ -114,7 +114,7 @@ describe "Progression" do
       end
 
       it 'should return the percentage completed after the next step is completed' do
-        @progression.next_step_percentage_completed.should == 100.0
+        @progression.percentage_completed_after_next_step.should == 100.0
       end
 
     end
@@ -145,7 +145,7 @@ describe "Progression" do
     end
 
     it 'should return the percentage completed after the next step is completed' do
-      @progression.next_step_percentage_completed.should == 25.0
+      @progression.percentage_completed_after_next_step.should == 25.0
     end
 
     describe "after last step" do
@@ -167,7 +167,7 @@ describe "Progression" do
       end
 
       it 'should return the percentage completed after the next step is completed' do
-        @progression.next_step_percentage_completed.should == 75.0
+        @progression.percentage_completed_after_next_step.should == 75.0
       end
 
     end

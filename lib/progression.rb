@@ -74,7 +74,7 @@ module Progression
       end
     end
 
-    def next_step_percentage_completed
+    def percentage_completed_after_next_step
       return 100.0 if next_step.nil?
       percentage_completed + @progression.percentage_value_for(next_step)
     end
