@@ -90,3 +90,19 @@ module Progression
   end
 
 end
+
+class NilClass
+
+  def blank?
+    true
+  end unless method_defined?(:blank?)
+
+end
+
+class String
+
+  def blank?
+    self !~ /\S/
+  end unless method_defined?(:blank?)
+
+end
